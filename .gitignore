@@ -1,0 +1,25 @@
+node_modules/
+dist/
+build/
+*.log
+.DS_Store
+.env
+.env.local
+.env.*.local
+*.pem
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.history/
+coverage/
+.nyc_output/
+
+# Claude Code / graphify session artifacts (machine-specific, not part of the project)
+.claude/
+CLAUDE.md
+GRAPHIFY_GUIDE.md
+NEXT_SESSION_CHECKLIST.md
+SESSION_SUMMARY.md
+graphify-out/

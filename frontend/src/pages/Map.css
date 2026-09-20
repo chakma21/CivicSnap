@@ -1,0 +1,47 @@
+.map-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#map {
+  background: #e0e0e0;
+}
+
+.locate-button {
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: white;
+  border: none;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.locate-button:hover {
+  background: #f4f4f4;
+}
+
+.locate-button.locating {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.user-location-dot {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4285f4;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.4), 0 1px 4px rgba(0, 0, 0, 0.4);
+}

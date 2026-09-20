@@ -1,0 +1,95 @@
+.report-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.report-container h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.report-container .form-group {
+  margin-bottom: 16px;
+}
+
+.report-container label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.report-container input,
+.report-container select,
+.report-container textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.report-container button[type="submit"] {
+  width: 100%;
+  padding: 13px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.report-container button[type="submit"]:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.report-container button[type="submit"]:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.report-container button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.report-container .location-button {
+  width: 100%;
+  padding: 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--accent-hover);
+  font-weight: 600;
+}
+
+.report-container .error-text {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.report-container .hint-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 6px 0 0;
+}
+
+.report-container .location-warning {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.report-container .photo-preview {
+  margin-top: 10px;
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 6px;
+  display: block;
+}

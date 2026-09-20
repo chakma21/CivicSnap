@@ -1,0 +1,184 @@
+.profile-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.profile-container h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.profile-container h2 {
+  font-size: 16px;
+  margin: 24px 0 12px;
+}
+
+.profile-info {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 2px 10px rgba(43, 32, 50, 0.08);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-info label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.profile-info p {
+  margin: 4px 0 0;
+  font-size: 15px;
+}
+
+.role-value {
+  text-transform: capitalize;
+}
+
+.profile-container .form-group {
+  margin-bottom: 16px;
+}
+
+.profile-container label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.profile-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.profile-container button[type="submit"] {
+  width: 100%;
+  padding: 13px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.profile-container button[type="submit"]:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.profile-container button[type="submit"]:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.profile-container button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile-container .error-text {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.profile-container .success-text {
+  color: #16a34a;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.profile-container .hint-text {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin: 6px 0 0;
+}
+
+.profile-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.profile-info-header h2 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.edit-button {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.readonly-field {
+  color: var(--text-secondary);
+}
+
+.readonly-tag {
+  font-size: 10px;
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.save-button {
+  flex: 1;
+  padding: 10px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-button:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  flex: 1;
+  padding: 10px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
