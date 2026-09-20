@@ -190,10 +190,10 @@ function Profile() {
                 type="text"
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
-                placeholder="e.g. ward-9"
+                placeholder="e.g. Pune or ward-9"
                 required
               />
-              <p className="hint-text">Only issues reported in this ward will appear in your Feed and Dashboard.</p>
+              <p className="hint-text">Matches any issue whose ward/area contains this text — e.g. "Pune" also matches "FC Road, Pune".</p>
             </div>
             {regionStatus && <p className={regionStatus.includes('updated') ? 'success-text' : 'error-text'}>{regionStatus}</p>}
             <button type="submit" disabled={savingRegion}>

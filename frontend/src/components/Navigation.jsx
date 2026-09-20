@@ -1,24 +1,27 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import { Home, MapPin, Plus, LayoutDashboard } from 'lucide-react'
 import './Navigation.css'
 
 function Navigation({ userRole }) {
   return (
     <nav className="bottom-nav">
-      <Link to="/" className="nav-link">
-        <span className="icon">📰</span>
+      <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+        <Home size={22} strokeWidth={2.2} />
         <span>Feed</span>
-      </Link>
-      <Link to="/map" className="nav-link">
-        <span className="icon">🗺️</span>
+      </NavLink>
+      <NavLink to="/map" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+        <MapPin size={22} strokeWidth={2.2} />
         <span>Map</span>
-      </Link>
-      <Link to="/report" className="nav-link fab">
-        <span className="icon">➕</span>
-      </Link>
-      <Link to="/dashboard" className="nav-link">
-        <span className="icon">📊</span>
+      </NavLink>
+      {userRole !== 'municipality' && (
+        <NavLink to="/report" className="nav-link fab" aria-label="Report an issue">
+          <Plus size={26} strokeWidth={2.5} />
+        </NavLink>
+      )}
+      <NavLink to="/dashboard" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+        <LayoutDashboard size={22} strokeWidth={2.2} />
         <span>Dashboard</span>
-      </Link>
+      </NavLink>
     </nav>
   )
 }

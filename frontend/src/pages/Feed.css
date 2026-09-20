@@ -25,15 +25,105 @@
   margin-bottom: 12px;
 }
 
+/* Story strip */
+.story-strip {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 4px 2px 16px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+
+.story-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.story {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 66px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.story-ring {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 2.5px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-ring-new {
+  background: none;
+  border: 2px dashed var(--border);
+}
+
+.story-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--surface);
+  color: white;
+}
+
+.story-avatar-photo {
+  object-fit: cover;
+}
+
+.story-avatar-new {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: none;
+}
+
+.story-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  max-width: 66px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+/* Controls */
 .feed-controls {
   display: flex;
   gap: 8px;
   margin-bottom: 12px;
 }
 
-.search-input {
+.search-wrap {
+  position: relative;
   flex: 1;
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 9px 12px 9px 36px;
   border: 1px solid var(--border);
   border-radius: 20px;
   font-size: 13px;
@@ -56,17 +146,24 @@
   overflow-x: auto;
   margin-bottom: 16px;
   padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.category-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .category-tab {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: 6px 14px;
   border-radius: 16px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text-secondary);
   font-size: 12px;
-  text-transform: capitalize;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -80,119 +177,5 @@
 .issues-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.issue-card {
-  background: var(--surface);
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 4px 16px rgba(43, 32, 50, 0.08);
-  border: 1px solid var(--border);
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-
-.issue-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(43, 32, 50, 0.12);
-}
-
-.issue-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.issue-card-header h3 {
-  margin: 0;
-  font-size: 16px;
-}
-
-.status-badge {
-  font-size: 12px;
-  padding: 2px 10px;
-  border-radius: 12px;
-  text-transform: capitalize;
-}
-
-.status-pending {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.status-in-progress {
-  background: #dbeafe;
-  color: #1e40af;
-}
-
-.status-resolved {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.status-escalated {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.issue-card-meta {
-  display: flex;
-  gap: 12px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-top: 8px;
-}
-
-.issue-photo {
-  display: block;
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.proof-photo-block {
-  margin-top: 10px;
-}
-
-.proof-photo-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: #16a34a;
-  margin-bottom: 6px;
-}
-
-.ai-badge {
-  background: var(--dark-panel);
-  color: #f3ede7;
-  font-size: 12px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  margin-top: 10px;
-  border-left: 3px solid var(--accent);
-}
-
-.upvote-button {
-  margin-top: 10px;
-  background: var(--accent-soft);
-  border: 1px solid var(--accent);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  color: var(--accent-hover);
-}
-
-.upvote-button.upvoted {
-  background: var(--accent);
-  color: white;
-}
-
-.upvote-button:hover {
-  background: var(--accent);
-  color: white;
+  gap: 14px;
 }

@@ -61,17 +61,20 @@ export async function handler(
 
     if (path === '/issues' && httpMethod === 'POST') {
       const body = JSON.parse(event.body || '{}')
-      const { title, description, category, wardId, lat, lng, userId, photoUrl, photoKey } = body
+      const { title, description, category, wardId, lat, lng, userId, username, photoUrls, photoKeys } = body
 
       if (!title || !userId) {
         return errorResponse(new Error('title and userId are required'), 400)
       }
 
+      // AI analysis only runs on the first photo — extra Bedrock calls per report
+      // aren't worth the cost, and one photo is enough to suggest category/severity.
+      const firstPhotoKey: string | undefined = photoKeys?.[0]
       let aiAnalysis = null
-      if (photoKey) {
+      if (firstPhotoKey) {
         try {
-          const format = photoKey.split('.').pop()?.toLowerCase() === 'png' ? 'png' : 'jpeg'
-          const s3Object = await s3Client.send(new GetObjectCommand({ Bucket: config.s3BucketName, Key: photoKey }))
+          const format = firstPhotoKey.split('.').pop()?.toLowerCase() === 'png' ? 'png' : 'jpeg'
+          const s3Object = await s3Client.send(new GetObjectCommand({ Bucket: config.s3BucketName, Key: firstPhotoKey }))
           const imageBytes = Buffer.from(await s3Object.Body!.transformToByteArray())
           aiAnalysis = await analyzePhoto(imageBytes, format)
         } catch (err) {
@@ -89,9 +92,12 @@ export async function handler(
         lat: lat ?? null,
         lng: lng ?? null,
         userId,
+        username: username || 'Anonymous',
         status: 'pending',
-        photoUrl: photoUrl || null,
+        photoUrl: photoUrls?.[0] || null,
+        photoUrls: photoUrls || [],
         aiAnalysis,
+        upvoterNames: {},
       }
 
       await dynamoDB.send(new PutCommand({ TableName: config.tableName, Item: item }))
@@ -100,7 +106,7 @@ export async function handler(
 
     if (path === '/issues/upvote' && httpMethod === 'POST') {
       const body = JSON.parse(event.body || '{}')
-      const { issueId, createdAt, userId } = body
+      const { issueId, createdAt, userId, username } = body
       if (!issueId || createdAt == null || !userId) {
         return errorResponse(new Error('issueId, createdAt, and userId are required'), 400)
       }
@@ -112,13 +118,22 @@ export async function handler(
       const upvotedBy: Set<string> | undefined = existing.Item?.upvotedBy
       const alreadyUpvoted = upvotedBy?.has(userId) ?? false
 
+      // upvoterNames tracks who complained (not just how many) so the feed can show
+      // "Complaint from <name> and N more". Read-modify-write here since the map may
+      // not exist yet on older items, and DynamoDB can't SET a nested path on a
+      // parent map that doesn't exist.
+      const upvoterNames: Record<string, string> = { ...(existing.Item?.upvoterNames || {}) }
+      if (alreadyUpvoted) {
+        delete upvoterNames[userId]
+      } else {
+        upvoterNames[userId] = username || 'A citizen'
+      }
+
       const result = await dynamoDB.send(new UpdateCommand({
         TableName: config.tableName,
         Key: { issueId, createdAt },
-        UpdateExpression: alreadyUpvoted
-          ? 'DELETE upvotedBy :userIdSet'
-          : 'ADD upvotedBy :userIdSet',
-        ExpressionAttributeValues: { ':userIdSet': new Set([userId]) },
+        UpdateExpression: (alreadyUpvoted ? 'DELETE upvotedBy :userIdSet' : 'ADD upvotedBy :userIdSet') + ' SET upvoterNames = :names',
+        ExpressionAttributeValues: { ':userIdSet': new Set([userId]), ':names': upvoterNames },
         ReturnValues: 'ALL_NEW',
       }))
       return successResponse(serializeItem(result.Attributes!))
@@ -149,9 +164,35 @@ export async function handler(
       return successResponse(serializeItem(result.Attributes!), 201)
     }
 
+    if (path === '/issues/update' && httpMethod === 'POST') {
+      const body = JSON.parse(event.body || '{}')
+      const { issueId, createdAt, text, photoUrl, authorUsername, visibility } = body
+      if (!issueId || createdAt == null || (!text?.trim() && !photoUrl)) {
+        return errorResponse(new Error('issueId, createdAt, and text or photoUrl are required'), 400)
+      }
+
+      const update = {
+        updateId: randomUUID(),
+        text: (text || '').trim(),
+        photoUrl: photoUrl || null,
+        authorUsername: authorUsername || 'Municipal team',
+        visibility: visibility === 'internal' ? 'internal' : 'public',
+        createdAt: Date.now(),
+      }
+
+      const result = await dynamoDB.send(new UpdateCommand({
+        TableName: config.tableName,
+        Key: { issueId, createdAt },
+        UpdateExpression: 'SET updates = list_append(if_not_exists(updates, :empty), :newUpdate)',
+        ExpressionAttributeValues: { ':empty': [], ':newUpdate': [update] },
+        ReturnValues: 'ALL_NEW',
+      }))
+      return successResponse(serializeItem(result.Attributes!), 201)
+    }
+
     if (path === '/issues/status' && httpMethod === 'PATCH') {
       const body = JSON.parse(event.body || '{}')
-      const { issueId, createdAt, status, proofPhotoUrl } = body
+      const { issueId, createdAt, status, proofPhotoUrl, assignedTo } = body
       const validStatuses = ['pending', 'in-progress', 'resolved']
       if (!issueId || createdAt == null || !validStatuses.includes(status)) {
         return errorResponse(new Error('issueId, createdAt, and a valid status are required'), 400)
@@ -162,6 +203,10 @@ export async function handler(
       if (proofPhotoUrl) {
         updateParts.push('proofPhotoUrl = :proofPhotoUrl')
         attrValues[':proofPhotoUrl'] = proofPhotoUrl
+      }
+      if (assignedTo !== undefined) {
+        updateParts.push('assignedTo = :assignedTo')
+        attrValues[':assignedTo'] = assignedTo || null
       }
 
       const result = await dynamoDB.send(new UpdateCommand({

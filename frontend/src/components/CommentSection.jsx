@@ -1,19 +1,10 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { MessageCircle, Send } from 'lucide-react'
+import { timeAgo } from '../utils/timeAgo'
 import './CommentSection.css'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-
-function timeAgo(timestamp) {
-  const seconds = Math.floor((Date.now() - timestamp) / 1000)
-  if (seconds < 60) return 'just now'
-  const minutes = Math.floor(seconds / 60)
-  if (minutes < 60) return `${minutes}m`
-  const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `${hours}h`
-  const days = Math.floor(hours / 24)
-  return `${days}d`
-}
 
 function CommentSection({ issue, onCommentAdded }) {
   const [expanded, setExpanded] = useState(false)
@@ -46,7 +37,8 @@ function CommentSection({ issue, onCommentAdded }) {
   return (
     <div className="comment-section">
       <button className="comment-toggle" onClick={() => setExpanded((v) => !v)}>
-        💬 {comments.length > 0 ? `${comments.length} comment${comments.length === 1 ? '' : 's'}` : 'Comment'}
+        <MessageCircle size={18} strokeWidth={2} />
+        {comments.length > 0 ? `${comments.length} comment${comments.length === 1 ? '' : 's'}` : 'Comment'}
       </button>
 
       {expanded && (
@@ -73,7 +65,9 @@ function CommentSection({ issue, onCommentAdded }) {
               onChange={(e) => setText(e.target.value)}
               maxLength={500}
             />
-            <button type="submit" disabled={posting || !text.trim()}>Post</button>
+            <button type="submit" disabled={posting || !text.trim()} aria-label="Post comment">
+              <Send size={15} strokeWidth={2.2} />
+            </button>
           </form>
         </div>
       )}

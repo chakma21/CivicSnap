@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+import { Sun, Moon, LogOut, UserCog, Trophy } from 'lucide-react'
 import './TopBar.css'
 
 function getInitialTheme() {
@@ -41,13 +42,16 @@ function TopBar({ onSignOut }) {
         <span className="top-bar-tagline">See it. Snap it. Get it fixed.</span>
       </div>
       <div className="top-bar-actions">
+        <Link to="/leaderboard" className="leaderboard-link" title="Top contributors" aria-label="Top contributors">
+          <Trophy size={18} strokeWidth={2.2} />
+        </Link>
         <button
           className="theme-toggle"
           onClick={toggleTheme}
           aria-label="Toggle dark mode"
           title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
         >
-          {theme === 'light' ? '🌙' : '☀️'}
+          {theme === 'light' ? <Moon size={18} strokeWidth={2.2} /> : <Sun size={18} strokeWidth={2.2} />}
         </button>
         <div className="profile-menu" ref={menuRef}>
           <button className="profile-avatar" onClick={() => setMenuOpen((open) => !open)}>
@@ -60,10 +64,10 @@ function TopBar({ onSignOut }) {
                 {username !== email && <div>{email}</div>}
               </div>
               <button onClick={() => { setMenuOpen(false); navigate('/profile') }}>
-                Manage Profile
+                <UserCog size={15} strokeWidth={2.2} /> Manage Profile
               </button>
               <button onClick={() => { setMenuOpen(false); onSignOut() }}>
-                Sign Out
+                <LogOut size={15} strokeWidth={2.2} /> Sign Out
               </button>
             </div>
           )}

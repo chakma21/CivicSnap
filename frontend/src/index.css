@@ -51,3 +51,35 @@ html, body, #root {
     font-size: 14px;
   }
 }
+
+/* Shared across Feed, Dashboard, and the issue detail page — lives here
+   (rather than a single page's CSS file) so it's guaranteed to be loaded
+   regardless of which route the app boots into. */
+.status-badge {
+  flex-shrink: 0;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-in-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-resolved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-escalated {
+  background: #fee2e2;
+  color: #991b1b;
+}

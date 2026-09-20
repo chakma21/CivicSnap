@@ -1,0 +1,40 @@
+.modal-header-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: -3px;
+  margin-right: 6px;
+}
+
+.complaints-empty {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.complaints-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.complaints-list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.complaints-avatar {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

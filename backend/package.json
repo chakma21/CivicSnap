@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "deploy": "node scripts/deploy.mjs"
+    "deploy": "node scripts/deploy.mjs",
+    "seed": "node scripts/seed-demo-data.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.350.0",

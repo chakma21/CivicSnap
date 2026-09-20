@@ -3,6 +3,9 @@
 }
 
 .comment-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: none;
   border: none;
   color: var(--text-secondary);
@@ -95,14 +98,17 @@
 }
 
 .comment-form button {
-  padding: 8px 16px;
-  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   border: none;
   background: var(--accent);
   color: white;
-  font-weight: 600;
-  font-size: 13px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .comment-form button:disabled {

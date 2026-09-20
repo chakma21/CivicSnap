@@ -1,0 +1,78 @@
+.skeleton-card {
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skeleton-card-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton {
+  display: block;
+  border-radius: 6px;
+  background: var(--border);
+}
+
+.skeleton-avatar {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+
+.skeleton-line {
+  height: 11px;
+  width: 100%;
+}
+
+.skeleton-line-short {
+  width: 60%;
+}
+
+.skeleton-line-shorter {
+  width: 35%;
+}
+
+.skeleton-photo {
+  width: 100%;
+  height: 220px;
+  border-radius: 10px;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  animation: shimmer-sweep 1.4s infinite;
+}
+
+:root[data-theme='dark'] .shimmer::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+}
+
+@keyframes shimmer-sweep {
+  100% {
+    transform: translateX(100%);
+  }
+}

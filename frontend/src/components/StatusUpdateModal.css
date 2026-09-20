@@ -77,6 +77,41 @@
   color: var(--text);
 }
 
+.modal-form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.modal-hint {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+.modal-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.modal-checkbox-row input {
+  width: auto;
+  margin: 0;
+}
+
 .modal-form-group input[type="file"] {
   color: var(--text);
   font-size: 13px;

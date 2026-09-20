@@ -9,6 +9,8 @@ import Dashboard from './pages/Dashboard'
 import Auth from './pages/Auth'
 import ReportIssue from './pages/ReportIssue'
 import Profile from './pages/Profile'
+import IssueDetail from './pages/IssueDetail'
+import Leaderboard from './pages/Leaderboard'
 import './App.css'
 
 const userPool = new CognitoUserPool({
@@ -58,8 +60,10 @@ function App() {
             <Route path="/" element={<Feed userRole={userRole} />} />
             <Route path="/map" element={<Map userRole={userRole} />} />
             <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />
-            <Route path="/report" element={<ReportIssue />} />
+            <Route path="/report" element={<ReportIssue userRole={userRole} />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/issue/:issueId" element={<IssueDetail />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
           </Routes>
         </main>
         <Navigation userRole={userRole} />
